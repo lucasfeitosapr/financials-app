@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-tab1',
@@ -7,6 +8,32 @@ import { Component } from '@angular/core';
 })
 export class Tab1Page {
 
-  constructor() {}
+
+  registerTransactionForm: FormGroup
+  transaction = {
+    value: 0,
+    description: '',
+  };
+
+  constructor(private fb: FormBuilder) {}
+
+  buildForms(){
+    return this.fb.group({
+      value: new FormControl('', [
+        Validators.required
+      ]),
+      description: new FormControl('', [
+        Validators.required
+      ])
+    })
+  }
+
+  get value() {
+    return this.registerTransactionForm.get('value');
+  }
+
+  get description() {
+    return this.registerTransactionForm.get('description');
+  }
 
 }

@@ -12,6 +12,26 @@
       <ion-title size="large">Tab 1</ion-title>
     </ion-toolbar>
   </ion-header>
-
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <div  [formGroup]="registerTransactionForm">
+    
+      <ion-item>
+        <ion-label  position="stacked">Valor da compra</ion-label>
+        <ion-input formControlName="value"></ion-input>
+      </ion-item>
+      
+      <ion-item *ngIf="value.invalid && value.touched">
+        <div *ngIf="value.errors.required">
+          Por favor, preencha o valor.
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label  formControlName="description" position="stacked">Descrição</ion-label>
+        <ion-input></ion-input>
+      </ion-item>
+      
+      <div>
+        <ion-button color="primary">Salvar</ion-button>
+      </div>
+   </div>
+  
 </ion-content>
