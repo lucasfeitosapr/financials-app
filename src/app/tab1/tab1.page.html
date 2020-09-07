@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Registro de Débitos
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -12,7 +12,12 @@
       <ion-title size="large">Tab 1</ion-title>
     </ion-toolbar>
   </ion-header>
-  <div  [formGroup]="registerTransactionForm">
+  <div  [formGroup]="registerExpenseForm">
+
+      <ion-item>
+        <ion-label  position="stacked">Título da compra</ion-label>
+        <ion-input formControlName="title" placeholder="Ex: Padaria, Mercado"></ion-input>
+      </ion-item>
     
       <ion-item>
         <ion-label  position="stacked">Valor da compra</ion-label>
@@ -25,13 +30,41 @@
         </div>
       </ion-item>
       <ion-item>
-        <ion-label  formControlName="description" position="stacked">Descrição</ion-label>
-        <ion-input></ion-input>
+        <ion-label position="stacked">Descrição</ion-label>
+        <ion-input formControlName="description"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Tag</ion-label>
+        <ion-input formControlName="tag"></ion-input>
       </ion-item>
       
       <div>
-        <ion-button color="primary">Salvar</ion-button>
+        <ion-button 
+        [disabled]="registerExpenseForm.invalid" 
+        color="primary"
+        expand="block"
+        (click)="saveExpense()">Salvar</ion-button>
       </div>
    </div>
+
+   <ion-card *ngFor="let expense of allExpenses">
+    <ion-card-header>
+      <div class="title-expenses-card">
+        <ion-card-title>{{ expense.title }}</ion-card-title>
+        <ion-card-title>{{'R$' + expense.value}}</ion-card-title>
+      </div>
+      
+      <ion-card-subtitle>
+        <ion-chip  color="secondary">
+
+          {{expense.tag}}
+        </ion-chip>  
+      </ion-card-subtitle>
+    </ion-card-header>
+  
+    <ion-card-content>
+      {{expense.description}}
+    </ion-card-content>
+  </ion-card>
   
 </ion-content>
