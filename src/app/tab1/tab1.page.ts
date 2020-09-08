@@ -5,7 +5,7 @@ interface Expense {
   title: string;
   value: number;
   description: string;
-  tag: string;
+  tag: Array<string>;
 }
 
 @Component({
@@ -21,14 +21,14 @@ export class Tab1Page {
     title: '',
     value: 0,
     description: '',
-    tag:''
+    tag:[]
   };
 
   allExpenses: Array<Expense> = new Array();
   titlesForTesting = ['Padaria', 'Mercado', 'Casa da pamonha', 'GoVegan'];
   valuesForTesting = [5.00, 50.37, 22.70, 50.00];
   descriptionForTesting = ['Pão', 'Compras da Semana', 'Almoço', 'Falafel, MijuMiju e Fritas.']
-  tagsForTesting = ['padaria', 'mercado', 'almoço', 'goVegan'];
+  tagsForTesting = [['padaria'], ['mercado'], ['almoço'], ['goVegan','lanche']];
 
   constructor(private fb: FormBuilder) {}
 
@@ -51,11 +51,12 @@ export class Tab1Page {
   }
 
   saveExpense(){
+    console.log()
     let newExpense: Expense = {
       title: this.title.value,
       value: this.value.value,
       description: this.description.value,
-      tag: this.tag.value
+      tag: this.tag.value.split(/[.,\*+-/_]\s*/)
     }
     this.allExpenses.push(newExpense)
 
