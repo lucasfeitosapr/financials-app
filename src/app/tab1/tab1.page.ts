@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
+import { ExpenseModalPage } from 'src/app/expense-modal/expense-modal/expense-modal.page';
 
 interface Expense {
   title: string;
@@ -15,26 +16,33 @@ interface Expense {
 })
 export class Tab1Page {
 
-
-  registerExpenseForm: FormGroup
-  expense = {
-    title: '',
-    value: 0,
-    description: '',
-    tag:[]
-  };
-
   allExpenses: Array<Expense> = new Array();
   titlesForTesting = ['Padaria', 'Mercado', 'Casa da pamonha', 'GoVegan'];
   valuesForTesting = [5.00, 50.37, 22.70, 50.00];
   descriptionForTesting = ['Pão', 'Compras da Semana', 'Almoço', 'Falafel, MijuMiju e Fritas.']
   tagsForTesting = [['padaria'], ['mercado'], ['almoço'], ['goVegan','lanche']];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(public modalController: ModalController) {}
 
   ngOnInit() {
-    this.registerExpenseForm = this.buildForms();
+    
     this.populateListForTesting();
+  }
+
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: ExpenseModalPage,
+      // cssClass: 'my-custom-class'
+    });
+
+    modal.onDidDismiss()
+      .then((data) => {
+        console.log(data['data'])
+        this.saveExpense(data['data'])
+        // const user = data['data']; // Here's your selected user!
+    });
+
+    return await modal.present();
   }
 
   populateListForTesting() {
@@ -50,50 +58,17 @@ export class Tab1Page {
     }
   }
 
-  saveExpense(){
+  saveExpense(newExpense){
     console.log()
-    let newExpense: Expense = {
-      title: this.title.value,
-      value: this.value.value,
-      description: this.description.value,
-      tag: this.tag.value.split(/[.,\*+-/_]\s*/)
+    let parseNewExpense: Expense = {
+      title: newExpense['title'],
+      value: newExpense['value'],
+      description: newExpense['description'],
+      tag: newExpense['tag']
     }
-    this.allExpenses.push(newExpense)
+    this.allExpenses.push(parseNewExpense)
 
     console.log(this.allExpenses)
-  }
-
-  buildForms(){
-    return this.fb.group({
-      title: new FormControl('', [
-        Validators.required
-      ]),
-      value: new FormControl('', [
-        Validators.required
-      ]),
-      description: new FormControl('', [
-        Validators.required
-      ]),
-      tag: new FormControl('', [
-        Validators.required
-      ])
-    })
-  }
-
-  get title() {
-    return this.registerExpenseForm.get('title');
-  }
-
-  get value() {
-    return this.registerExpenseForm.get('value');
-  }
-
-  get description() {
-    return this.registerExpenseForm.get('description');
-  }
-
-  get tag() {
-    return this.registerExpenseForm.get('tag');
   }
 
 }

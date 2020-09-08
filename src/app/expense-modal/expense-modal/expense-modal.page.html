@@ -1,14 +1,6 @@
-<ion-header [translucent]="true">
-  <ion-toolbar >
-    <div style="display: flex" >
-    <ion-title>
-      Registro de Débitos
-    </ion-title>
-    <ion-button>
-      <ion-icon name="filter-outline" ></ion-icon>
-    </ion-button>
-  
-</div>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Novo Registro</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -18,7 +10,7 @@
       <ion-title size="large">Wallet</ion-title>
     </ion-toolbar>
   </ion-header>
-  <!-- <div  [formGroup]="registerExpenseForm">
+  <div  [formGroup]="registerExpenseForm">
 
       <ion-item>
         <ion-label  position="stacked">Título da compra</ion-label>
@@ -51,31 +43,6 @@
         expand="block"
         (click)="saveExpense()">Salvar</ion-button>
       </div>
-   </div> -->
-
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="presentModal()">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-
-   <ion-card *ngFor="let expense of allExpenses">
-    <ion-card-header>
-      <div class="title-expenses-card">
-        <ion-card-title>{{ expense.title }}</ion-card-title>
-        <ion-card-title>{{'R$' + expense.value}}</ion-card-title>
-      </div>
-      
-      <ion-card-subtitle>
-        <ion-chip *ngFor="let tag of expense.tag" color="secondary">
-          {{tag}}
-        </ion-chip>  
-      </ion-card-subtitle>
-    </ion-card-header>
-  
-    <ion-card-content>
-      {{expense.description}}
-    </ion-card-content>
-  </ion-card>
+   </div>
   
 </ion-content>
